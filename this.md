@@ -83,5 +83,6 @@ let person1 = {
 }
 person1.say(); //输出对象person1
 ```
+总结：箭头函数中的this，首先到它的父作用域找，如果父作用域还是箭头函数，那么接着向上找，直到找到this的指向。
 [this原理](http://www.ruanyifeng.com/blog/2018/06/javascript-this.html)  
 [this 指向详细解析（箭头函数）](https://www.cnblogs.com/dongcanliang/p/7054176.html)
