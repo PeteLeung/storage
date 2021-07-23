@@ -1,0 +1,127 @@
+# 数组基本操作
+### 1.数组的创建
+```
+//通过方括号直接创建数组字面量
+var arr = [1,2,3,4];
+
+//通过new运算符创建数组构造函数
+var arr = new Array();
+var arr = new Array(4); //指定长度,并不是上限长度
+var arr = new Arrray(1,2,3,4);
+```
+实际上所有情况下数组都是变长的，也就是说即使指定了长度为4，仍然可以将元素存储在规定长度以外的，注意：这时长度会随之改变。
+### 2.数组元素的访问
+```
+var a = arr[i]; //获取数组元素值
+arr[i] = 1; //为数组元素赋新值
+```
+### 3.数组的增删（改变）
+#### push和pop
+```
+var arr = [1,2,3,4];
+arr.push(5,6); //[1,2,3,4,5,6] 返回6
+arr.pop(); //[1,2,3,4,5] 返回5
+```
+push：在数组尾插入一个或多个元素并返回数组新长度  
+pop：删除数组尾的元素并返回删除的元素
+
+#### unshift和shift
+```
+var arr = new Array([1,2,3,4]);
+arr.unshift(-1,0); //[-1,0,1,2,3,4] 返回6
+arr.shift(); //[0,1,2,3,4] 返回5
+```
+unshift：在数组头插入一个或多个元素并返回数组新长度  
+shift：删除数组头的元素并返回删除的元素
+
+#### splice
+```
+var arr = [1,2,3,4];
+arr.splice(1,2); //[1,4] 返回[2,3]
+arr.splice(1,0,5,6); //[1,5,6,4] 返回[]
+```
+splice()可以通过传入参数实现数组的插入、删除、替换并返回一个由删除了的元素组成的数组  
+1.splice(a,b)  
+&nbsp;&nbsp;当splice()只传入2个参数且b>0,可以理解为此方法是对数组指定位置元素的删除  
+&nbsp;&nbsp;a：此参数指定数组中的操作位置,即从数组下标a开始  
+&nbsp;&nbsp;b：此参数指定从a开始要删除的个数  
+2.splice(a,b,c,d,e...)  
+&nbsp;&nbsp;c,d,e,...：从第三个参数开始为在数组a下表插入的元素，且原数组a位置后的元素自动后移
+
+### 4.数组拷贝（不改变）
+#### concat 数组的合并
+```
+var arr = [1,2,3];
+var arr1 = [4,5,6];
+var arr2 = arr.concat(arr1); //[1,2,3,4,5,6]
+```
+#### slice 数组的指定截取
+```
+var arr = [1,2,3,4,5];
+var arr1 = arr.slice(1,3); //[2,3] 
+```
+slice接受2个参数，一个是从哪里开始，另一个是到哪里结束(但不包括此元素)
+#### concat()和slice()并不会对原数组造成影响，而是会先创建当前数组的一个副本，然后再进行操作
+
+### 5.数组排序（改变）
+```
+arr.reverse(); //数组反转，返回数组地址
+arr.sort(); //小到大排序，配合reverse()可以大到小排序
+```
+### 6.数组字符串化（不改变）
+```
+var arr = [1,2,3,4];
+console.log(arr.join()); //"1,2,3,4"
+console.log(arr.join('')); //"1234"
+```
+join(separator)：separator为分隔符，规定数组字符串化时数组元素以什么字符进行分隔，默认为","
+
+### prototype 属性
+
+返回对象类型原型的引用。prototype 属性是 object 共有的。  
+objectName.prototype  
+objectName 参数是object对象的名称。  
+
+说明：  
+用 prototype 属性提供对象的类的一组基本功能。 对象的新实例“继承”赋予该对象原型的操作。  
+对于数组对象，以以下例子说明prototype 属性的用途。  
+给数组对象添加返回数组中最大元素值的方法。要完成这一点，声明一个函数，将它加入 Array.prototype， 并使用它。  
+```
+function array_max()
+{
+var i,
+max = this[0];
+for (i = 1; i < this.length; i++)
+{
+if (max < this[i])
+max = this[i];
+}
+return max;
+}
+Array.prototype.max = array_max;
+var x = new Array(1, 2, 3, 4, 5, 6);
+var y = x.max();
+```
+该代码执行后，y 保存数组 x 中的最大值，或说 6。
+
+### constructor 属性
+
+表示创建对象的函数。  
+object.constructor //object是对象或函数的名称。  
+说明：constructor 属性是所有具有 prototype 的对象的成员。它们包括除 Global 和 Math 对象以外的所有 JScript 固有对象。constructor 属性保存了对构造特定对象实例的函数的引用。  
+例如：  
+```
+x = new String("Hi");
+if (x.constructor == String) // 进行处理（条件为真）。
+
+或
+function MyFunc {
+// 函数体。
+}
+
+y = new MyFunc;
+if (y.constructor == MyFunc) // 进行处理（条件为真）。
+
+对于数组来说：
+y = new Array();
+```
